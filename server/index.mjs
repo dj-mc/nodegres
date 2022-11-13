@@ -43,12 +43,12 @@ app.get("/todo_item/:todo_id", async (req, res) => {
 });
 
 app.post("/todo_list", async (req, res) => {
-  const { description, important } = req.body;
+  const { description, important, more_info } = req.body;
 
   try {
     const new_todo_item = await db_pool.query(
-      "INSERT INTO todo_item (description, important) VALUES ($1, $2) RETURNING *",
-      [description, important]
+      "INSERT INTO todo_item (description, important, more_info) VALUES ($1, $2, $3) RETURNING *",
+      [description, important, more_info]
     );
 
     res.json(new_todo_item);
@@ -60,12 +60,12 @@ app.post("/todo_list", async (req, res) => {
 app.put("/todo_item/:todo_id", async (req, res) => {
   // Update description of todo_item
   const { todo_id } = req.params; // WHERE
-  const { description, important } = req.body; // SET
+  const { description, important, more_info } = req.body; // SET
 
   try {
     const updated_todo_item = await db_pool.query(
-      "UPDATE todo_item SET description = $1, important = $2 WHERE todo_id = $3",
-      [description, important, todo_id]
+      "UPDATE todo_item SET description = $1, important = $2, more_info = $3 WHERE todo_id = $4",
+      [description, important, more_info, todo_id]
     );
 
     console.dir(updated_todo_item, { colors: true });
