@@ -10,3 +10,6 @@ CREATE TABLE todo_item (
 
 ALTER TABLE todo_item
     ADD COLUMN important BOOLEAN DEFAULT FALSE;
+
+ALTER TABLE todo_item
+    ADD COLUMN more_info VARCHAR(255);
