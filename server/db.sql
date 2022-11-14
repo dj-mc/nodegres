@@ -13,3 +13,11 @@ ALTER TABLE todo_item
 
 ALTER TABLE todo_item
     ADD COLUMN more_info VARCHAR(255);
+
+ALTER TABLE todo_item
+    ADD COLUMN tags VARCHAR(255);
+
+ALTER TABLE todo_item
+    ALTER tags DROP DEFAULT,
+    ALTER tags TYPE TEXT[] USING ARRAY[tags],
+    ALTER tags SET DEFAULT '{}';
