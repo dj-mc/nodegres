@@ -4,17 +4,25 @@ const TodoInput = () => {
   const [important, set_important] = useState(false);
   const [description, set_description] = useState("");
   const [more_info, set_more_info] = useState("");
+  const [tags, set_tags] = useState("");
 
   const on_submit_form = async (e) => {
     e.preventDefault();
+    const tags_array = tags.split(" ");
     try {
-      const response = await fetch("http://localhost:5000/todo_list", {
+      await fetch("http://localhost:5000/todo_list", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ description, important, more_info }),
+        body: JSON.stringify({
+          description,
+          important,
+          more_info,
+          tags: tags_array,
+        }),
       });
-
-      console.log(response);
+      set_description("");
+      set_more_info("");
+      set_tags("");
     } catch (err) {
       console.error(err);
     }
@@ -22,7 +30,7 @@ const TodoInput = () => {
 
   return (
     <>
-      <h1 className="text-center my-5">New Todo Item</h1>
+      <h3 className="text-center my-5">New Todo Item</h3>
       <form
         style={{ width: "600px", margin: "0 auto" }}
         onSubmit={on_submit_form}
@@ -70,15 +78,39 @@ const TodoInput = () => {
 
         {/* Additional information */}
         {description !== "" ? (
-          <div className="my-3">
+          <div id="more-info-container" className="mx-5 my-3">
             <p className="text-center">More Info</p>
             <div
               id="more-info"
-              className="mx-5 my-3 rounded-3"
+              className="text-start rounded-3"
               style={{ height: "100px", border: "1px solid lightgray" }}
               contentEditable={true}
               onInput={(e) => set_more_info(e.currentTarget.textContent)}
             ></div>
+          </div>
+        ) : null}
+
+        {/* Tags */}
+        {more_info !== "" ? (
+          <div
+            id="tags-container"
+            className="mx-5 my-3"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <p>Add Tags</p>
+            <p style={{ fontSize: "smaller" }}>Tags are separated by spaces</p>
+            <input
+              type="text"
+              className="form-control me-1"
+              style={{ width: "200px" }}
+              value={tags}
+              onChange={(e) => set_tags(e.target.value)}
+            />
           </div>
         ) : null}
       </form>
