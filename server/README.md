@@ -46,11 +46,17 @@ Make a request:
 pipx install httpie
 # Or use curl/postman/etc.
 
-http POST localhost:5000/todo_list description="Go back to sleep" important=TRUE
-http GET localhost:5000/all
+http POST localhost:5000/todo_list \
+  description="Go back to sleep" important=TRUE
+
 http GET localhost:5000/1
-http PUT localhost:5000/todo_item/1 description="Workout at gym for 45 min" more_info="Chest/back superset + cardio"
-http GET localhost:5000/info
+http GET localhost:5000/all
+http GET localhost:5000/descriptions
+
+http PUT http://localhost:5000/todo_item/1 \
+  description="Workout at gym for 45 min" \
+  tags:='["gym", "health"]'
+
 http DELETE localhost:5000/todo_item/1
 ```
 

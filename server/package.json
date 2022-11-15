@@ -5,7 +5,8 @@
   "description": "Template project for express, (postgres + docker), and react",
   "main": "index.js",
   "scripts": {
-    "dev": "npx nodemon index.mjs"
+    "dev": "npx nodemon index.mjs",
+    "check": "npx prettier --check . '!./pgdata'"
   },
   "author": "dj-mc",
   "license": "ISC",
