@@ -45,7 +45,9 @@ app.get("/todo_item/:todo_id", async (req, res) => {
 });
 
 app.post("/todo_list", async (req, res) => {
-  const { description, important, more_info, tags } = req.body;
+  let { important } = req.body;
+  if (important === null) important = false;
+  const { description, more_info, tags } = req.body;
 
   try {
     const new_todo_item = await db_pool.query(

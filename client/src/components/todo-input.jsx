@@ -8,9 +8,10 @@ const TodoInput = () => {
 
   const on_submit_form = async (e) => {
     e.preventDefault();
-    const tags_array = tags.split(" ");
+    const tags_array = tags.trim().split(/\s+/);
+
     try {
-      await fetch("http://localhost:5000/todo_list", {
+      const response = await fetch("http://localhost:5000/todo_list", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -23,6 +24,7 @@ const TodoInput = () => {
       set_description("");
       set_more_info("");
       set_tags("");
+      if (response.status === 200) window.location.reload();
     } catch (err) {
       console.error(err);
     }
@@ -35,7 +37,8 @@ const TodoInput = () => {
         style={{ width: "600px", margin: "0 auto" }}
         onSubmit={on_submit_form}
       >
-        <div className="d-flex mx-5">
+        <p className="text-start">Description</p>
+        <div className="d-flex">
           {/* Add todo_item input */}
           <input
             type="text"
@@ -78,12 +81,16 @@ const TodoInput = () => {
 
         {/* Additional information */}
         {description !== "" ? (
-          <div id="more-info-container" className="mx-5 my-3">
-            <p className="text-center">More Info</p>
+          <div className="my-3">
+            <p className="text-start">More Info</p>
             <div
-              id="more-info"
-              className="text-start rounded-3"
-              style={{ height: "100px", border: "1px solid lightgray" }}
+              className="text-start"
+              style={{
+                height: "100px",
+                border: "1px solid lightgray",
+                padding: "6px 12px",
+                borderRadius: ".375rem",
+              }}
               contentEditable={true}
               onInput={(e) => set_more_info(e.currentTarget.textContent)}
             ></div>
@@ -93,8 +100,7 @@ const TodoInput = () => {
         {/* Tags */}
         {more_info !== "" ? (
           <div
-            id="tags-container"
-            className="mx-5 my-3"
+            className="my-3"
             style={{
               display: "flex",
               flexDirection: "column",
@@ -102,7 +108,7 @@ const TodoInput = () => {
               alignItems: "center",
             }}
           >
-            <p>Add Tags</p>
+            <p className="m-0">Add Tags</p>
             <p style={{ fontSize: "smaller" }}>Tags are separated by spaces</p>
             <input
               type="text"
