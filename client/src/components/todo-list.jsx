@@ -1,55 +1,76 @@
 import { useEffect, useState } from "react";
+import TodoEdit from "./todo-edit";
+import "./todo-list.css";
 
 const BasicTable = ({ list, delete_todo_item }) => {
   return (
-    <table className="table">
-      {/* Table headers */}
-      <thead>
-        <tr>
-          <th>Description</th>
-          <th>Important</th>
-          <th>More Info</th>
-          <th>Tags</th>
-        </tr>
-      </thead>
+    <div id="basic-table">
+      <table className="table">
+        {/* Table headers */}
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th>Important</th>
+            <th>More Info</th>
+            <th>Tags</th>
+            <th>Edit</th>
+          </tr>
+        </thead>
 
-      {/* Actual table data */}
-      <tbody>
-        {list.map((todo_item) => {
-          return (
-            <tr key={todo_item.todo_id}>
-              <td>{todo_item.description}</td>
-              <td>{`${todo_item.important}`}</td>
-              <td>{todo_item.more_info}</td>
-              <td>
-                {todo_item.tags
-                  ? todo_item.tags.map((tag, idx) => (
-                      <div key={idx} className="border border-primary my-1">{tag}</div>
-                    ))
-                  : null}
-              </td>
+        {/* Actual table data */}
+        <tbody>
+          {list.map((todo_item) => {
+            return (
+              <tr key={todo_item.todo_id}>
+                <td>{todo_item.description}</td>
+                <td>{`${todo_item.important}`}</td>
+                <td>{todo_item.more_info}</td>
+                <td>
+                  <div className="d-flex flex-row flex-wrap justify-content-start align-self-center">
+                    {/* Hide empty tags */}
+                    {/* {todo_item.tags && todo_item.tags[0] */}
+                    {todo_item.tags
+                      ? todo_item.tags.map((tag, idx) => (
+                          <div
+                            key={idx}
+                            className="border border-primary"
+                            style={{
+                              margin: "1px",
+                              padding: "5px",
+                              width: "fit-content",
+                              fontSize: "10px",
+                              borderRadius: ".375rem",
+                            }}
+                          >
+                            {tag ? tag : "empty tag"}
+                          </div>
+                        ))
+                      : null}
+                  </div>
+                </td>
 
-              {/* Edit and delete button group */}
-              <td>
-                <div
-                  className="btn-group"
-                  role="group"
-                  aria-label="Edit and delete buttons"
-                >
-                  <button className="btn btn-outline-primary">alter</button>
-                  <button
-                    className="btn btn-danger"
-                    onClick={() => delete_todo_item(todo_item.todo_id)}
+                {/* Edit and delete button group */}
+                <td>
+                  <div
+                    className="btn-group"
+                    role="group"
+                    aria-label="Edit and delete buttons"
                   >
-                    destroy
-                  </button>
-                </div>
-              </td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
+                    <TodoEdit />
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => delete_todo_item(todo_item.todo_id)}
+                    >
+                      destroy
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
   );
 };
 
@@ -79,7 +100,9 @@ const TodoList = () => {
           headers: { "Content-Type": "application/json" },
         }
       );
-      if (response.status === 200) window.location.reload();
+      if (response.status === 200) {
+        set_list(list.filter((todo_item) => todo_item.todo_id !== todo_id));
+      }
     } catch (err) {
       console.error(err);
     }

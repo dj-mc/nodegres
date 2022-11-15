@@ -1,0 +1,11 @@
+div#basic-table {
+  width: 80%;
+  margin: 0 auto;
+}
+
+@media (max-width: 800px) {
+  div#basic-table {
+    width: 100%;
+    font-size: smaller;
+  }
+}
