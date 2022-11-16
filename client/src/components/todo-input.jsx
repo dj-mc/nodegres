@@ -51,7 +51,7 @@ const TodoInput = () => {
           <div
             className="btn-group"
             role="group"
-            aria-label="Add and toggle importance"
+            aria-label="Add and toggle importance buttons"
           >
             <button
               type="submit"
@@ -90,6 +90,7 @@ const TodoInput = () => {
                 border: "1px solid lightgray",
                 padding: "6px 12px",
                 borderRadius: ".375rem",
+                overflow: "hidden",
               }}
               contentEditable={true}
               onInput={(e) => set_more_info(e.currentTarget.textContent)}
