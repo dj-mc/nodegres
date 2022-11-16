@@ -3,6 +3,24 @@ import { useState } from "react";
 const TodoEdit = ({ todo_item }) => {
   const [description, set_description] = useState(todo_item.description);
 
+  const edit_description_of = async (todo_id) => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/todo_item/${todo_id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ ...todo_item, description }),
+        }
+      );
+      if (response.status === 200) window.location = "/";
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <>
       <button
@@ -15,7 +33,7 @@ const TodoEdit = ({ todo_item }) => {
 
       <div
         id={`edit-todo-modal-id${todo_item.todo_id}`}
-        className="modal fade"
+        className="modal"
         aria-hidden="true"
         aria-labelledby="edit-todo-modal-label"
         tabIndex={-1}
@@ -31,11 +49,17 @@ const TodoEdit = ({ todo_item }) => {
                 className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
+                onClick={() => set_description(todo_item.description)}
               ></button>
             </div>
 
             <div className="modal-body">
-              <input type="text" className="form-control" value={description} />
+              <input
+                type="text"
+                className="form-control"
+                value={description}
+                onChange={(e) => set_description(e.target.value)}
+              />
             </div>
 
             <div className="modal-footer">
@@ -48,12 +72,14 @@ const TodoEdit = ({ todo_item }) => {
                 <button
                   className="btn btn-outline-secondary"
                   data-bs-dismiss="modal"
+                  onClick={() => set_description(todo_item.description)}
                 >
                   Close
                 </button>
                 <button
                   className="btn btn-outline-primary btn-success"
                   style={{ color: "white" }}
+                  onClick={() => edit_description_of(todo_item.todo_id)}
                 >
                   Save
                 </button>
