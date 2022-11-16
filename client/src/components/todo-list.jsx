@@ -26,37 +26,39 @@ const BasicTable = ({ list, delete_todo_item }) => {
                 <td>{`${todo_item.important}`}</td>
                 <td>{todo_item.more_info}</td>
                 <td>
-                  <div className="d-flex flex-row flex-wrap justify-content-start align-self-center">
-                    {/* Hide empty tags */}
-                    {/* {todo_item.tags && todo_item.tags[0] */}
+                  <div className="d-flex flex-row flex-wrap">
                     {todo_item.tags
-                      ? todo_item.tags.map((tag, idx) => (
-                          <div
-                            key={idx}
-                            className="border border-primary"
-                            style={{
-                              margin: "1px",
-                              padding: "5px",
-                              width: "fit-content",
-                              fontSize: "10px",
-                              borderRadius: ".375rem",
-                            }}
-                          >
-                            {tag ? tag : "empty tag"}
-                          </div>
-                        ))
+                      ? todo_item.tags.map((tag, idx) => {
+                          return (
+                            <div
+                              key={`todo=${todo_item.todo_id} :: tag=${todo_item.tags[idx]}`}
+                              className="border border-primary"
+                              style={{
+                                margin: "1px",
+                                padding: "5px",
+                                width: "fit-content",
+                                fontSize: "10px",
+                                borderRadius: ".375rem",
+                              }}
+                            >
+                              {tag ? tag : "empty tag"}
+                            </div>
+                          );
+                        })
                       : null}
                   </div>
                 </td>
 
-                {/* Edit and delete button group */}
+                {/* Edit todo_item button, delete todo_item button */}
                 <td>
                   <div
+                    id="edit-buttons"
                     className="btn-group"
+                    style={{ margin: "1px" }}
                     role="group"
                     aria-label="Edit and delete buttons"
                   >
-                    <TodoEdit />
+                    <TodoEdit todo_item={todo_item} />
                     <button
                       className="btn btn-danger"
                       onClick={() => delete_todo_item(todo_item.todo_id)}
