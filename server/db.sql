@@ -21,3 +21,14 @@ ALTER TABLE todo_item
     ALTER tags DROP DEFAULT,
     ALTER tags TYPE TEXT[] USING ARRAY[tags],
     ALTER tags SET DEFAULT '{}';
+
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+CREATE TABLE users (
+    user_id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+    user_name VARCHAR(255) NOT NULL,
+    user_password VARCHAR(255) NOT NULL,
+    user_email VARCHAR(255) NOT NULL
+);
+
+-- psql -d "dbname='todo_list_db' user='postgres' password='postgres' host='localhost'" -f db.sql
