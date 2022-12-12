@@ -1,12 +1,14 @@
 import cors from "cors";
 import express from "express";
 
+import auth_router from "./routers/jwt-auth.mjs";
 import db_pool from "./db.mjs";
 
 const app = express();
 
 app.use(cors());
 app.use(express.json()); // Access req.body with json data
+app.use("/auth", auth_router);
 
 app.get("/all", async (req, res) => {
   try {
