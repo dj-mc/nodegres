@@ -47,17 +47,24 @@ pipx install httpie
 # Or use curl/postman/etc.
 
 http POST localhost:5000/todo_list \
-  description="Go back to sleep" important=TRUE
+    description="Go back to sleep" important=TRUE
 
 http GET localhost:5000/1
 http GET localhost:5000/all
 http GET localhost:5000/descriptions
 
 http PUT http://localhost:5000/todo_item/1 \
-  description="Workout at gym for 45 min" \
-  tags:='["gym", "health"]'
+    description="Workout at gym for 45 min" \
+    tags:='["gym", "health"]'
 
 http DELETE localhost:5000/todo_item/1
+```
+
+Create a user:
+
+```bash
+http POST localhost:5000/auth/register \
+    user_name="Joseph93" user_email="email@email.123" user_password="password123"
 ```
 
 ---
@@ -89,7 +96,7 @@ CREATE DATABASE `<database>` ENCODING 'UTF8' OWNER dan;
 \du
 ```
 
-The hard, but customizable, way:
+## peer authentication: customizing roles
 
 Check system-username: `whoami`
 
