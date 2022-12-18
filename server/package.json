@@ -6,6 +6,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "npx nodemon index.mjs",
+    "dev:env": "env $(cat .env | xargs) npx nodemon index.mjs",
     "check": "npx prettier --check . '!./pgdata'"
   },
   "author": "dj-mc",
