@@ -4,19 +4,16 @@ import jwt from "jsonwebtoken";
 
 import db_pool from "../db.mjs";
 import validate from "../middleware/validate.mjs";
+import authorize from "../middleware/authorize.mjs";
 
 // Authenticate a user's login/register credentials
 
 const auth_router = express.Router();
 
 function jwt_sign_user_id(id) {
-  return jwt.sign(
-    { user: { user_id: id } },
-    process.env.JWT_SECRET,
-    {
-      expiresIn: 60 * 60,
-    }
-  );
+  return jwt.sign({ user: { user_id: id } }, process.env.JWT_SECRET, {
+    expiresIn: 60 * 60,
+  });
 }
 
 auth_router.post("/register", validate, async (req, res) => {
@@ -46,7 +43,7 @@ auth_router.post("/register", validate, async (req, res) => {
         [user_name, user_email, hashed_password]
       );
       // Generate user login session token
-      const token = jwt_sign_user_id(pending_user.rows[0].user_id)
+      const token = jwt_sign_user_id(pending_user.rows[0].user_id);
       return res.json({ token });
     }
 
@@ -81,9 +78,17 @@ auth_router.post("/login", validate, async (req, res) => {
       return res.status(401).send("Incorrect credentials");
     } else {
       // Generate user login session token
-      const token = jwt_sign_user_id(user.rows[0].user_id)
+      const token = jwt_sign_user_id(user.rows[0].user_id);
       return res.json({ token });
     }
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
+auth_router.get("/check", authorize, async (req, res) => {
+  try {
+    res.json(true);
   } catch (err) {
     res.status(500).send(err.message);
   }
