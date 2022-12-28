@@ -3,6 +3,9 @@ import express from "express";
 import jwt from "jsonwebtoken";
 
 import db_pool from "../db.mjs";
+import validate from "../middleware/validate.mjs";
+
+// Authenticate a user's login/register credentials
 
 const auth_router = express.Router();
 
@@ -16,7 +19,7 @@ function jwt_sign_user_id(id) {
   );
 }
 
-auth_router.post("/register", async (req, res) => {
+auth_router.post("/register", validate, async (req, res) => {
   const { user_name, user_email, user_password } = req.body;
 
   try {
@@ -53,7 +56,7 @@ auth_router.post("/register", async (req, res) => {
   }
 });
 
-auth_router.post("/login", async (req, res) => {
+auth_router.post("/login", validate, async (req, res) => {
   const { user_email, user_password } = req.body;
 
   try {
