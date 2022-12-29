@@ -2,7 +2,7 @@ import TodoInput from "./components/todo-input";
 import TodoList from "./components/todo-list";
 import "./App.css";
 
-function App() {
+const App = () => {
   return (
     <>
       <div className="App">
@@ -13,6 +13,6 @@ function App() {
       </div>
     </>
   );
-}
+};
 
 export default App;

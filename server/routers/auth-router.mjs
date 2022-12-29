@@ -86,6 +86,8 @@ auth_router.post("/login", validate, async (req, res) => {
   }
 });
 
+// Use `authorize` middleware to check if req.body
+// contains a verified JSON web token.
 auth_router.get("/check", authorize, async (req, res) => {
   try {
     res.json(true);

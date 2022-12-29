@@ -1,5 +1,7 @@
 import jwt from "jsonwebtoken";
 
+// Authorize access to a logged in user
+
 const authorize = async (req, res, next) => {
   try {
     const token = req.body.token;
