@@ -1,3 +1,32 @@
 .App {
   text-align: center;
 }
+
+.logout-button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 250px;
+  height: 100px;
+  margin: auto;
+}
+
+.logout-button > button {
+  font-size: smaller;
+}
+
+.logout-button > span {
+  font-size: smaller;
+  margin-bottom: 5px;
+}
+
+.user_name {
+  font-weight: bolder;
+}
+
+.auth-button > button {
+  width: 100px;
+  font-size: smaller;
+}

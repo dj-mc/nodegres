@@ -1,8 +1,8 @@
-// import TodoInput from "../components/todo-input";
-// import TodoList from "../components/todo-list";
-
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+import TodoInput from "../components/todo-input";
+import TodoList from "../components/todo-list";
 
 const Home = ({ is_auth, set_auth }) => {
   const navigate = useNavigate();
@@ -38,20 +38,24 @@ const Home = ({ is_auth, set_auth }) => {
 
   return is_auth ? (
     <div>
-      <h1>nodegres</h1>
-      <p>A todo list app built using the PERN stack</p>
       <h1>Home</h1>
-      <span>{is_auth ? `logged in as ${logged_in_user}` : "logged out"}</span>
-      <button
-        onClick={() => {
-          localStorage.removeItem("token");
-          set_logged_in_user(null);
-          set_auth(false);
-        }}
-        className={"btn btn-outline-secondary"}
-      >
-        Logout
-      </button>
+      <TodoInput />
+      <TodoList />
+      <div className="logout-button">
+        <span>
+          Logged in as: <span className="user_name">{logged_in_user}</span>
+        </span>
+        <button
+          onClick={() => {
+            localStorage.removeItem("token");
+            set_logged_in_user(null);
+            set_auth(false);
+          }}
+          className={"btn btn-outline-secondary"}
+        >
+          Logout
+        </button>
+      </div>
     </div>
   ) : (
     <p>Authorizing...</p>

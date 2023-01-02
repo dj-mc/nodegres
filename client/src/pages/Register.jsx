@@ -53,7 +53,7 @@ const Register = ({ is_auth, set_auth }) => {
       <h1>Register</h1>
       <form
         onSubmit={on_submit_handler}
-        style={{ width: "600px", margin: "auto" }}
+        style={{ width: "400px", margin: "auto" }}
       >
         <input
           type="email"
@@ -76,11 +76,11 @@ const Register = ({ is_auth, set_auth }) => {
           onChange={(e) => on_input_change(e)}
           className="form-control my-3"
         />
-        <div className="d-flex justify-content-between">
+        <div className="d-flex justify-content-between auth-button">
           <button type="submit" className="btn btn-outline-primary">
             Submit
           </button>
-          <span>{is_auth ? "logged in" : "logged out"}</span>
+          <span>{is_auth ? "Already logged in?" : "You're logged out"}</span>
           <button
             onClick={() => navigate("/login")}
             className="btn btn-outline-secondary"
