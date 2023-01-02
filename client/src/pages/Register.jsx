@@ -66,6 +66,7 @@ const Register = ({ is_auth, set_auth }) => {
           >
             Submit
           </button>
+          <span>{is_auth ? "logged in" : "logged out"}</span>
           <button
             onClick={() => navigate("/login")}
             className="btn btn-outline-secondary"

@@ -13,18 +13,21 @@ const Home = ({ is_auth, set_auth }) => {
     }
   }, [is_auth, navigate]);
 
-  return (
-    <>
+  return is_auth ? (
+    <div>
       <h1>nodegres</h1>
       <p>A todo list app built using the PERN stack</p>
       <h1>Home</h1>
+      <span>{is_auth ? "logged in" : "logged out"}</span>
       <button
         onClick={() => set_auth(false)}
         className={"btn btn-outline-secondary"}
       >
         Logout
       </button>
-    </>
+    </div>
+  ) : (
+    <p>Authorizing...</p>
   );
 };
 
