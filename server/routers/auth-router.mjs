@@ -10,11 +10,11 @@ import authorize from "../middleware/authorize.mjs";
 
 const auth_router = express.Router();
 
-function jwt_sign_user_id(id) {
+const jwt_sign_user_id = (id) => {
   return jwt.sign({ user: { user_id: id } }, process.env.JWT_SECRET, {
     expiresIn: 60 * 60,
   });
-}
+};
 
 auth_router.post("/register", validate, async (req, res) => {
   const { user_name, user_email, user_password } = req.body;

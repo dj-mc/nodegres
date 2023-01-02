@@ -1,14 +1,15 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+// import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Register = ({ is_auth, set_auth }) => {
   const [input, set_input] = useState({
-    email: "",
-    password: "",
-    username: "",
+    user_email: "",
+    user_password: "",
+    user_name: "",
   });
 
-  const { email, password, username } = input;
+  const { user_email, user_password, user_name } = input;
 
   const on_input_change = (e) => {
     set_input({ ...input, [e.target.name]: e.target.value });
@@ -16,16 +17,32 @@ const Register = ({ is_auth, set_auth }) => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (is_auth) {
-      navigate("/home");
-    }
-  }, [is_auth, navigate]);
+  // console.log(is_auth);
+
+  // useEffect(() => {
+  //   if (is_auth) {
+  //     navigate("/home");
+  //   }
+  // }, [is_auth, navigate]);
 
   const on_submit_handler = async (e) => {
     e.preventDefault();
 
     try {
+      const response = await fetch("http://localhost:5000/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ...input }),
+      });
+
+      const expected_token = await response.json();
+      localStorage.setItem("token", expected_token.token);
+      if (localStorage.token) {
+        set_auth(true);
+        navigate("/home");
+      }
     } catch (err) {
       console.error(err);
     }
@@ -40,30 +57,27 @@ const Register = ({ is_auth, set_auth }) => {
       >
         <input
           type="email"
-          name="email"
-          value={email}
+          name="user_email"
+          value={user_email}
           onChange={(e) => on_input_change(e)}
           className="form-control my-3"
         />
         <input
           type="password"
-          name="password"
-          value={password}
+          name="user_password"
+          value={user_password}
           onChange={(e) => on_input_change(e)}
           className="form-control my-3"
         />
         <input
           type="text"
-          name="username"
-          value={username}
+          name="user_name"
+          value={user_name}
           onChange={(e) => on_input_change(e)}
           className="form-control my-3"
         />
         <div className="d-flex justify-content-between">
-          <button
-            onClick={() => set_auth(true)}
-            className="btn btn-outline-primary"
-          >
+          <button type="submit" className="btn btn-outline-primary">
             Submit
           </button>
           <span>{is_auth ? "logged in" : "logged out"}</span>
