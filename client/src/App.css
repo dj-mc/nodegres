@@ -30,3 +30,13 @@
   width: 100px;
   font-size: smaller;
 }
+
+form > p {
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+form > input {
+  margin: 3px 0 10px 0;
+}

@@ -55,26 +55,29 @@ const Register = ({ is_auth, set_auth }) => {
         onSubmit={on_submit_handler}
         style={{ width: "400px", margin: "auto" }}
       >
+        <p>email</p>
         <input
           type="email"
           name="user_email"
           value={user_email}
           onChange={(e) => on_input_change(e)}
-          className="form-control my-3"
+          className="form-control"
         />
+        <p>password</p>
         <input
           type="password"
           name="user_password"
           value={user_password}
           onChange={(e) => on_input_change(e)}
-          className="form-control my-3"
+          className="form-control"
         />
+        <p>username</p>
         <input
           type="text"
           name="user_name"
           value={user_name}
           onChange={(e) => on_input_change(e)}
-          className="form-control my-3"
+          className="form-control"
         />
         <div className="d-flex justify-content-between auth-button">
           <button type="submit" className="btn btn-outline-primary">
